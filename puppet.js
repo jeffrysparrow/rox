@@ -1,4 +1,6 @@
 const puppeteer = require('puppeteer');
+const scrapingbee = require('scrapingbee');
+const axios = require('axios');
 require('dotenv').config();
 
 const scrapeData = async (username) => {
@@ -26,6 +28,27 @@ const scrapeData = async (username) => {
     await page.goto(process.env.PRINT_URL);
     await page.waitForTimeout(10000);
     await page.screenshot({path: 'printable.png'});
+
+    const extractRules = {
+      "table_json" : {
+          "selector": "table",
+          "output": "table_json"
+      }
+  }
+
+  // not working
+    await axios.get('https://app.scrapingbee.com/api/v1', {
+      params: {
+        'api_key': process.env.API_KEY,
+        'url': process.env.PRINT_URL,
+        'extract_rules':
+        `{"table_json" {
+          "selector": "table", "output": "table_json"}
+        }`,
+      }
+    }).then((response) => {
+      console.log(response.data);
+    })
 
 
 
