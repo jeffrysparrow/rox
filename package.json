@@ -1,0 +1,23 @@
+{
+  "name": "rox",
+  "version": "1.0.0",
+  "description": "rox",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jeffrysparrow/rox.git"
+  },
+  "author": "Jeff Sparrow",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jeffrysparrow/rox/issues"
+  },
+  "homepage": "https://github.com/jeffrysparrow/rox#readme",
+  "dependencies": {
+    "axios": "^0.27.2",
+    "express": "^4.18.1"
+  }
+}
