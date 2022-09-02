@@ -3,6 +3,7 @@ const scrapingbee = require('scrapingbee');
 const axios = require('axios');
 require('dotenv').config();
 
+
 const scrapeData = async (username) => {
   try {
     const browser = await puppeteer.launch( {headless: true });
@@ -29,30 +30,13 @@ const scrapeData = async (username) => {
     await page.waitForTimeout(10000);
     await page.screenshot({path: 'printable.png'});
 
-    const extractRules = {
-      "table_json" : {
-          "selector": "table",
-          "output": "table_json"
-      }
-  }
-
-  // not working
-    await axios.get('https://app.scrapingbee.com/api/v1', {
-      params: {
-        'api_key': process.env.API_KEY,
-        'url': process.env.PRINT_URL,
-        'extract_rules':
-        `{"table_json" {
-          "selector": "table", "output": "table_json"}
-        }`,
-      }
-    }).then((response) => {
-      console.log(response.data);
-    })
-
-
-
-
+    // all initial data in array of strings, each string is a row
+    const data = await page.evaluate(() => {
+      const tds = Array.from(document.querySelectorAll('tr'))
+      return tds.map(td => td.innerText)
+    });
+    // console.log(data);
+    // console.log(data.length);
 
     await browser.close();
   } catch (error) {
